@@ -1,0 +1,37 @@
+<h1 class="text-3xl">Listado de Pokémons</h1>
+<h2 class="text-xl">Página actual: {{page()}}</h2>
+
+<hr class="my-2" />
+
+@if (pokemonResourse.isLoading()) {
+<app-pokemon-list-skeletor />
+}
+@else if(pokemonResourse.error()){
+<div>Ocurrio un error </div>
+}
+@else {
+<app-pokemon-list  [pokemons]="pokemonResourse.value() ?? []" />
+
+}
+
+
+
+
+<div class="flex justify-between">
+    <a class="btn btn-primary mt-2"
+       [routerLink]="[]"
+       [queryParams]="{p: page()-1}"
+       queryParamsHandling="merge"
+       [class.pointer-events-none]="page() <= 1"
+       [class.opacity-50]="page() <= 1"
+       >
+        Anteriores
+    </a>
+    <a class="btn mt-2"
+       [routerLink]="[]"
+       [queryParams]="{p: page()+1}"
+       queryParamsHandling="merge"
+    >
+        Siguientes
+    </a>
+</div>
