@@ -22,18 +22,18 @@ export default class PokemonPage {
 
 
   pokemonResourse = rxResource({
-    params: () => ({ 'id': this.pokemonId }),
+    params: () => ({ 'id': this.pokemonId() }),
     stream: ({ params }) => {
-      return this.pokemonService.LoadPokemon(params.id()).pipe(
+      return this.pokemonService.LoadPokemon(params.id).pipe(
         tap(({ id, name }) => {
           const pageTitle = `#${id} - ${name}`;
           const description = `Página del pokemon ${name}`;
 
           this.title.setTitle(pageTitle);
           this.metatag.updateTag({ name: 'description', content: description });
-          this.metatag.updateTag({ name: 'og:title', content: pageTitle });
-          this.metatag.updateTag({ name: 'og:description', content: description });
-          this.metatag.updateTag({ name: 'og:image', content: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${id}.png` });
+          this.metatag.updateTag({ property: 'og:title', content: pageTitle });
+          this.metatag.updateTag({ property: 'og:description', content: description });
+          this.metatag.updateTag({ property: 'og:image', content: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/shiny/${id}.png` });
 
 
           console.log("esta es la data " + id);
